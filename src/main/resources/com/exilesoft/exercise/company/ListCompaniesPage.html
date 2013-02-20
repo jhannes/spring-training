@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Registered companies</title>
+</head>
+<body>
+
+  <h1>Registered companies</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Company name</th>
+        <th>Home page</th>
+        <th>Company type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr wicket:id="companies">
+        <td><a wicket:id="url"><span wicket:id="companyName" /></a></td>
+        <td><a wicket:id="companyUrl"></a></td>
+        <td wicket:id="companyType" />
+        <td wicket:id="employeeCount" />
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

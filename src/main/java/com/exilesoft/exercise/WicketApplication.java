@@ -5,6 +5,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
 import com.exilesoft.exercise.company.CreateCompanyPage;
+import com.exilesoft.exercise.company.ListCompaniesPage;
 
 public class WicketApplication extends WebApplication {
 
@@ -16,6 +17,7 @@ public class WicketApplication extends WebApplication {
 	@Override
 	protected void init() {
 	    mountPage("company/create.html", CreateCompanyPage.class);
+	    mountPage("company/index.html", ListCompaniesPage.class);
 
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 	}

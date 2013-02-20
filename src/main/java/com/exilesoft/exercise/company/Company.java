@@ -4,10 +4,13 @@ import java.io.Serializable;
 
 public class Company implements Serializable {
 
+    private long idSequence;
+
     private String companyName;
     private String companyUrl;
 
     private CompanyType companyType;
+    private final Long id = idSequence++;
 
     public String getCompanyName() {
         return companyName;
@@ -31,6 +34,14 @@ public class Company implements Serializable {
 
     public void setCompanyType(CompanyType companyType) {
         this.companyType = companyType;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public int getEmployeeCount() {
+        return 0;
     }
 
 }
