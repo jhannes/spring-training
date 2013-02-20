@@ -1,4 +1,4 @@
-package com.exilesoft.training;
+package com.exilesoft.exercise;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.fest.assertions.api.Assertions.fail;
@@ -17,6 +17,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.exilesoft.exercise.ApplicationInfo;
 
 public class AddressBookWebTest {
 

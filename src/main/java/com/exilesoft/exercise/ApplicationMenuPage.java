@@ -5,7 +5,6 @@ import javax.inject.Inject;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 
-import com.exilesoft.training.ApplicationInfo;
 
 public class ApplicationMenuPage extends WebPage {
 

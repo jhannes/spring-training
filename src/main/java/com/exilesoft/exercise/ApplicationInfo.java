@@ -1,4 +1,4 @@
-package com.exilesoft.training;
+package com.exilesoft.exercise;
 
 import org.springframework.stereotype.Component;
 
