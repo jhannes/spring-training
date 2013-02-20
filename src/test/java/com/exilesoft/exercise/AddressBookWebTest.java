@@ -4,6 +4,8 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import static org.fest.assertions.api.Assertions.fail;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +23,9 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.exilesoft.exercise.ApplicationInfo;
 import com.exilesoft.exercise.company.type.CompanyType;
 import com.exilesoft.exercise.company.type.CompanyTypeRepository;
+import com.exilesoft.exercise.company.type.JdbcCompanyTypeRepository;
 
 public class AddressBookWebTest {
 
@@ -116,13 +118,18 @@ public class AddressBookWebTest {
 	}
 
 	private String startWebServer() throws Exception {
-		System.setProperty("wicket.configuration", "DEPLOYMENT");
-		System.setProperty(Environment.HBM2DDL_AUTO, "create");
+	    System.setProperty("wicket.configuration", "DEPLOYMENT");
 
-        JdbcDataSource dataSource = new JdbcDataSource();
-        dataSource.setURL("jdbc:h2:mem:integration;DB_CLOSE_DELAY=-1");
-        dataSource.setUser("sa");
-		new EnvEntry("java:/DefaultDS", dataSource);
+	    JdbcDataSource dataSource = new JdbcDataSource();
+	    dataSource.setURL("jdbc:h2:mem:integration;DB_CLOSE_DELAY=-1");
+	    dataSource.setUser("sa");
+	    new EnvEntry("java:/DefaultDS", dataSource);
+		System.setProperty(Environment.HBM2DDL_AUTO, "create");
+        try (Connection connection = dataSource.getConnection()) {
+            try(Statement statement = connection.createStatement()) {
+                JdbcCompanyTypeRepository.createTable(statement);
+            }
+        }
 
         Server server = new Server(0);
         WebAppContext webApplication = new WebAppContext("src/main/webapp", "/root");

@@ -32,6 +32,10 @@ public class CompanyType implements Serializable {
         return id;
     }
 
+    void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(typeName);
