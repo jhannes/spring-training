@@ -3,11 +3,8 @@ package com.exilesoft.exercise.company.type;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import com.exilesoft.exercise.infrastructure.AbstractInmemoryRepository;
 
-@Repository
 public class InmemoryCompanyTypeRepository extends AbstractInmemoryRepository implements CompanyTypeRepository {
 
     private final List<CompanyType> types = new ArrayList<>();

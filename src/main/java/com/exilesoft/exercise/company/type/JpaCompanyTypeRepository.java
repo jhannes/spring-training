@@ -3,15 +3,23 @@ package com.exilesoft.exercise.company.type;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+@Repository
+@Transactional(propagation=Propagation.REQUIRED)
 public class JpaCompanyTypeRepository implements CompanyTypeRepository {
 
-    private final EntityManager entityManager;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    @Autowired
+    public JpaCompanyTypeRepository() {
+    }
+
     public JpaCompanyTypeRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

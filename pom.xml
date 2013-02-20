@@ -119,6 +119,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-plus</artifactId>
+            <version>7.6.8.v20121106</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.seleniumhq.webdriver</groupId>
             <artifactId>webdriver-htmlunit</artifactId>
             <version>0.9.7376</version>
