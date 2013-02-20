@@ -3,12 +3,12 @@ package com.exilesoft.exercise.company;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class InmemoryCompanyRepository implements CompanyRepository {
 
-    private static List<Company> companies = new ArrayList<>();
+    private final List<Company> companies = new ArrayList<>();
 
     @Override
     public void create(Company newObject) {
