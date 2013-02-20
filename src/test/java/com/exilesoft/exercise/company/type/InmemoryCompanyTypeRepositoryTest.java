@@ -1,13 +1,13 @@
 package com.exilesoft.exercise.company.type;
 
 
-
 public class InmemoryCompanyTypeRepositoryTest extends AbstractCompanyTypeRepositoryTest {
 
-    @Override
-    protected CompanyTypeRepository createCompanyTypeRepository() {
-        return new InmemoryCompanyTypeRepository();
-    }
+    private final InmemoryCompanyTypeRepository repository = new InmemoryCompanyTypeRepository();
 
+    @Override
+    protected CompanyTypeRepository getRepository() {
+        return repository;
+    }
 
 }

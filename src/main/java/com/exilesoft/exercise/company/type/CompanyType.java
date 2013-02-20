@@ -2,15 +2,23 @@ package com.exilesoft.exercise.company.type;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import com.google.common.base.Objects;
 
+@Entity
 public class CompanyType implements Serializable {
 
     private static long idSequence;
 
+    @Id
     private final Long id = idSequence++;
 
-    private final String typeName;
+    private String typeName;
+
+    CompanyType() {
+    }
 
     public CompanyType(String typeName) {
         this.typeName = typeName;
