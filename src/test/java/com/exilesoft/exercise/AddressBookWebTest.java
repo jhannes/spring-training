@@ -19,15 +19,20 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.exilesoft.exercise.ApplicationInfo;
+import com.exilesoft.exercise.company.type.CompanyType;
+import com.exilesoft.exercise.company.type.CompanyTypeRepository;
 
 public class AddressBookWebTest {
 
     private WebDriver browser;
 	private String url;
+    private WebApplicationContext applicationContext;
 
     @Test
     public void fullScenarioTest() throws Exception {
-        this.url = startWebServer("Johannes's addresses");
+        this.url = startWebServer();
+        setApplicationName("Johannes's addresses");
+        setCompanyTypes("Software", "Offshoring");
         this.browser = createWebBrowser();
 
         browser.get(url);
@@ -42,7 +47,18 @@ public class AddressBookWebTest {
         verifyPersonPresent("Johannes Brodwall (Exilesoft)");
     }
 
-	private void addCompany(String companyName, String companyUrl, String companyType) {
+	private void setCompanyTypes(String... types) {
+        CompanyTypeRepository typeRepository = applicationContext.getBean(CompanyTypeRepository.class);
+        for (String type : types) {
+            typeRepository.create(new CompanyType(type));
+        }
+    }
+
+    private void setApplicationName(String applicationName) {
+        applicationContext.getBean(ApplicationInfo.class).setName(applicationName);
+    }
+
+    private void addCompany(String companyName, String companyUrl, String companyType) {
 	    browser.findElement(By.linkText("Add company")).click();
 	    browser.findElement(By.name("companyName")).sendKeys(companyName);
 	    browser.findElement(By.name("companyUrl")).sendKeys(companyUrl);
@@ -96,7 +112,7 @@ public class AddressBookWebTest {
 	    return null;
 	}
 
-	private String startWebServer(String applicationName) throws Exception {
+	private String startWebServer() throws Exception {
 		System.setProperty("wicket.configuration", "DEPLOYMENT");
 
         Server server = new Server(0);
@@ -104,10 +120,7 @@ public class AddressBookWebTest {
         server.setHandler(webApplication);
         server.start();
 
-        WebApplicationContext applicationContext =
-                WebApplicationContextUtils.getRequiredWebApplicationContext(webApplication.getServletContext());
-        applicationContext.getBean(ApplicationInfo.class).setName(applicationName);
-
+        applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(webApplication.getServletContext());
         return new URL("http", "localhost", server.getConnectors()[0].getLocalPort(), "/root").toString();
     }
 

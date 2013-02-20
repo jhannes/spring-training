@@ -1,16 +1,33 @@
 package com.exilesoft.exercise.company.type;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.exilesoft.exercise.infrastructure.AbstractInmemoryRepository;
+
 @Repository
-public class InmemoryCompanyTypeRepository implements CompanyTypeRepository {
+public class InmemoryCompanyTypeRepository extends AbstractInmemoryRepository implements CompanyTypeRepository {
+
+    private final List<CompanyType> types = new ArrayList<>();
 
     @Override
     public List<CompanyType> list() {
-        return Arrays.asList(new CompanyType("Software"), new CompanyType("Offshoring"));
+        return types;
+    }
+
+    @Override
+    public void create(CompanyType object) {
+        types.add(object);
+    }
+
+    @Override
+    public CompanyType find(Long id) {
+        for (CompanyType companyType : types) {
+            if (companyType.getId().equals(id)) return clone(companyType);
+        }
+        return null;
     }
 
 }

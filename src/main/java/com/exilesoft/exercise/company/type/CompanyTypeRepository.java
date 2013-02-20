@@ -6,4 +6,8 @@ public interface CompanyTypeRepository {
 
     List<CompanyType> list();
 
+    void create(CompanyType object);
+
+    CompanyType find(Long id);
+
 }
