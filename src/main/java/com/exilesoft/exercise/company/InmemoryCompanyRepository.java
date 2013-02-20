@@ -1,19 +1,20 @@
 package com.exilesoft.exercise.company;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-
-import com.exilesoft.exercise.company.type.CompanyType;
 
 public class InmemoryCompanyRepository implements CompanyRepository {
 
+    private static List<Company> companies = new ArrayList<>();
+
+    @Override
+    public void create(Company newObject) {
+        companies.add(newObject);
+    }
+
     @Override
     public List<Company> list() {
-        Company visma = new Company();
-        visma.setCompanyName("Visma");
-        visma.setCompanyUrl("http://Visma.com");
-        visma.setCompanyType(new CompanyType("Type"));
-        return Arrays.asList(visma);
+        return companies;
     }
 
 }

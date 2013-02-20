@@ -7,6 +7,15 @@
 <body>
 
   <h1>Registered companies</h1>
+  
+  <div>
+    <form wicket:id="companySearch">
+        <label for="nameQuery">Only show companies matching:</label>
+        <input type="text" id="nameQuery" name="nameQuery" wicket:id="nameQuery" />
+        <input type="submit" value="Search" />    
+    </form>
+  </div>
+  
 
   <table>
     <thead>

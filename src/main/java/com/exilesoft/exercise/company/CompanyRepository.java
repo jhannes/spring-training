@@ -6,4 +6,6 @@ public interface CompanyRepository {
 
     List<Company> list();
 
+    void create(Company newObject);
+
 }

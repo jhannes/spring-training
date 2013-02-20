@@ -15,6 +15,7 @@ import com.exilesoft.exercise.company.type.InmemoryCompanyTypeRepository;
 public class CreateCompanyPage extends WebPage {
 
     transient private final CompanyTypeRepository companyTypeRepository = new InmemoryCompanyTypeRepository();
+    transient private final CompanyRepository companyRepository = new InmemoryCompanyRepository();
 
 
     public class CompanyForm extends Form<Company> {
@@ -28,6 +29,7 @@ public class CreateCompanyPage extends WebPage {
 
         @Override
         protected void onSubmit() {
+            companyRepository.create(getModelObject());
             setResponsePage(ApplicationMenuPage.class);
         }
 
