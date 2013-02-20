@@ -11,17 +11,16 @@ http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
   <context:component-scan base-package="com.exilesoft.exercise" />
+  <tx:annotation-driven transaction-manager="txManager" />
 
-  <!-- 
   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean" />
 
   <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
     <property name="entityManagerFactory" ref="entityManagerFactory" />
   </bean>
-   -->
+  <!-- 
   <jee:jndi-lookup id="ds" jndi-name="java:/DefaultDS" />
 
-  <!-- 
   <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
     <property name="dataSource" ref="ds" />
     <property name="annotatedClasses">
@@ -35,11 +34,9 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
     <property name="sessionFactory" ref="sessionFactory" />
   </bean>
 
-   -->
-
   <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     <property name="dataSource" ref="ds" />
   </bean>
+   -->
 
-  <tx:annotation-driven transaction-manager="txManager" />
 </beans>
