@@ -5,7 +5,11 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 
+import com.exilesoft.exercise.ApplicationMenuPage;
+
 public class PersonFormPanel extends Panel {
+
+    private transient PersonRepository personRepository = new InmemoryPersonRepository();
 
     public class PersonForm extends Form<Person> {
 
@@ -14,6 +18,12 @@ public class PersonFormPanel extends Panel {
 
             add(new TextField<>("personName"));
             add(new TextField<>("emailAddress"));
+        }
+
+        @Override
+        protected void onSubmit() {
+            personRepository.create(getModelObject());
+            setResponsePage(ApplicationMenuPage.class);
         }
 
     }

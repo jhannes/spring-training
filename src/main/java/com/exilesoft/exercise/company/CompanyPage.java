@@ -16,7 +16,7 @@ public class CompanyPage extends WebPage {
         Company company = repository.find(parameters.get("id").toLong());
         add(new Label("heading", "Details for " + company.getCompanyName()));
         add(new Label("type", company.getCompanyType().getTypeName()));
-        add(new PersonFormPanel("personForm", new Person()));
+        add(new PersonFormPanel("personForm", new Person(company)));
     }
 
     public static BookmarkablePageLink<Void> link(String id, Long companyId, String companyName) {
