@@ -1,5 +1,8 @@
 package com.exilesoft.training;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ApplicationInfo {
 
 	private String name;

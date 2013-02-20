@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Create a new company</title>
+</head>
+<body>
+
+    <h2>Create a new company</h2>
+
+    <form wicket:id="companyForm" method="post">
+        <div>
+            <label for="companyName">Name:</label>
+            <input type="text" id="companyName" name="companyName" wicket:id="companyName" />
+        </div>
+        <div>
+            <label for="companyUrl">Home page:</label>
+            <input type="text" id="companyUrl" name="companyUrl" wicket:id="companyUrl" />
+        </div>
+        <div>
+            <label for="companyType">Type:</label>
+            <select id="companyType" name="companyType" wicket:id="companyType"></select>
+        </div>
+        <div>
+            <input type="submit" value="Add company" />
+        </div>
+    
+    </form>
+
+
+
+</body>
+</html>
