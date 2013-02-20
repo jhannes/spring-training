@@ -13,4 +13,5 @@
     </root>
     
   <logger name="org.eclipse.jetty" level="WARN" />
+  <logger name="org.apache.wicket" level="WARN" />
 </configuration>

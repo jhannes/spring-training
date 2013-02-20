@@ -91,6 +91,8 @@ public class AddressBookWebTest {
 	}
 
 	private String startWebServer(String applicationName) throws Exception {
+		System.setProperty("wicket.configuration", "DEPLOYMENT");
+
         Server server = new Server(0);
         WebAppContext webApplication = new WebAppContext("src/main/webapp", "/root");
         server.setHandler(webApplication);
