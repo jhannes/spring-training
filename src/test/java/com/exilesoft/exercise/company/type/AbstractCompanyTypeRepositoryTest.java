@@ -18,6 +18,17 @@ public abstract class AbstractCompanyTypeRepositoryTest {
             .isEqualsToByComparingFields(companyType);
     }
 
+    @Test
+    public void shouldListAllCompanyTypes() throws Exception {
+        CompanyType type1 = randomCompanyType();
+        CompanyType type2 = randomCompanyType();
+        getRepository().create(type1);
+        getRepository().create(type2);
+
+        assertThat(getRepository().list())
+            .contains(type1).contains(type2);
+    }
+
     private CompanyType randomCompanyType() {
         return new CompanyType(RandomData.randomWord());
     }

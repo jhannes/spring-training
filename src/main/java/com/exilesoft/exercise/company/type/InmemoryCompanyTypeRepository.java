@@ -20,6 +20,7 @@ public class InmemoryCompanyTypeRepository extends AbstractInmemoryRepository im
     @Override
     public void create(CompanyType object) {
         types.add(object);
+        generateId(object);
     }
 
     @Override

@@ -5,8 +5,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
 
 public class AbstractInmemoryRepository {
+
+    private long idSequence = 0;
 
 	@SuppressWarnings("unchecked")
 	protected static<T> T clone(T obj) {
@@ -17,11 +20,19 @@ public class AbstractInmemoryRepository {
 			ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(
 					out.toByteArray()));
 			return (T)in.readObject();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
+		} catch (ClassNotFoundException|IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
+
+    protected void generateId(Object object) {
+        try {
+            Field field = object.getClass().getDeclaredField("id");
+            field.setAccessible(true);
+            field.set(object, idSequence++);
+        } catch (NoSuchFieldException|SecurityException|IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

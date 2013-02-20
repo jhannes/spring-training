@@ -5,10 +5,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class JpaCompanyTypeRepository implements CompanyTypeRepository {
 
     private final EntityManager entityManager;
 
+    @Autowired
     public JpaCompanyTypeRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

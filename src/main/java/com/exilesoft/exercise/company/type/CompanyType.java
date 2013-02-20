@@ -3,6 +3,7 @@ package com.exilesoft.exercise.company.type;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import com.google.common.base.Objects;
@@ -10,10 +11,9 @@ import com.google.common.base.Objects;
 @Entity
 public class CompanyType implements Serializable {
 
-    private static long idSequence;
-
     @Id
-    private final Long id = idSequence++;
+    @GeneratedValue
+    private Long id;
 
     private String typeName;
 
