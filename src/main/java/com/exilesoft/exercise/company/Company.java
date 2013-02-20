@@ -2,6 +2,8 @@ package com.exilesoft.exercise.company;
 
 import java.io.Serializable;
 
+import com.exilesoft.exercise.company.type.CompanyType;
+
 public class Company implements Serializable {
 
     private long idSequence;

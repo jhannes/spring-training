@@ -3,6 +3,8 @@ package com.exilesoft.exercise.company;
 import java.util.Arrays;
 import java.util.List;
 
+import com.exilesoft.exercise.company.type.CompanyType;
+
 public class InmemoryCompanyRepository implements CompanyRepository {
 
     @Override

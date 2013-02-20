@@ -8,6 +8,8 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 
 import com.exilesoft.exercise.ApplicationMenuPage;
+import com.exilesoft.exercise.company.type.CompanyTypeRepository;
+import com.exilesoft.exercise.company.type.InmemoryCompanyTypeRepository;
 
 @SuppressWarnings("serial")
 public class CreateCompanyPage extends WebPage {

@@ -1,4 +1,4 @@
-package com.exilesoft.exercise.company;
+package com.exilesoft.exercise.company.type;
 
 import java.util.Arrays;
 import java.util.List;
