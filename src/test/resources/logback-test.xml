@@ -12,6 +12,8 @@
         <appender-ref ref="STDOUT" />
     </root>
     
+  <logger name="/root" level="WARN" />
   <logger name="org.eclipse.jetty" level="WARN" />
   <logger name="org.apache.wicket" level="WARN" />
+  <logger name="org.springframework" level="WARN" />
 </configuration>

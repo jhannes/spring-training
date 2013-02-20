@@ -15,6 +15,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class AddressBookWebTest {
 
@@ -98,9 +100,9 @@ public class AddressBookWebTest {
         server.setHandler(webApplication);
         server.start();
 
-        //WebApplicationContext applicationContext =
-        //        WebApplicationContextUtils.getRequiredWebApplicationContext(webApplication.getServletContext());
-        //applicationContext.getBean(ApplicationInfo.class).setName(applicationName);
+        WebApplicationContext applicationContext =
+                WebApplicationContextUtils.getRequiredWebApplicationContext(webApplication.getServletContext());
+        applicationContext.getBean(ApplicationInfo.class).setName(applicationName);
 
         return new URL("http", "localhost", server.getConnectors()[0].getLocalPort(), "/root").toString();
     }
