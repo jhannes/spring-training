@@ -1,5 +1,7 @@
 package com.exilesoft.exercise.person;
 
+import javax.inject.Inject;
+
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -9,7 +11,8 @@ import com.exilesoft.exercise.ApplicationMenuPage;
 
 public class PersonFormPanel extends Panel {
 
-    private transient PersonRepository personRepository = new InmemoryPersonRepository();
+    @Inject
+    private PersonRepository personRepository;
 
     public class PersonForm extends Form<Person> {
 

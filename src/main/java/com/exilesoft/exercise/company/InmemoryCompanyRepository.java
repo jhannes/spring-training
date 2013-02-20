@@ -3,6 +3,9 @@ package com.exilesoft.exercise.company;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class InmemoryCompanyRepository implements CompanyRepository {
 
     private static List<Company> companies = new ArrayList<>();

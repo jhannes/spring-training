@@ -3,6 +3,9 @@ package com.exilesoft.exercise.company.type;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class InmemoryCompanyTypeRepository implements CompanyTypeRepository {
 
     @Override

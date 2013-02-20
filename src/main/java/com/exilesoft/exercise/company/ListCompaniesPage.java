@@ -1,5 +1,7 @@
 package com.exilesoft.exercise.company;
 
+import javax.inject.Inject;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -11,7 +13,8 @@ import org.apache.wicket.model.Model;
 
 public class ListCompaniesPage extends WebPage {
 
-    transient private final CompanyRepository repository = new InmemoryCompanyRepository();
+    @Inject
+    private CompanyRepository repository;
 
     public ListCompaniesPage() {
         add(new ListView<Company>("companies", repository.list()) {

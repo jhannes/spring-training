@@ -3,6 +3,9 @@ package com.exilesoft.exercise.person;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class InmemoryPersonRepository implements PersonRepository {
 
     private static List<Person> people = new ArrayList<>();

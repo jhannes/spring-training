@@ -1,5 +1,7 @@
 package com.exilesoft.exercise.company;
 
+import javax.inject.Inject;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -9,13 +11,15 @@ import org.apache.wicket.model.CompoundPropertyModel;
 
 import com.exilesoft.exercise.ApplicationMenuPage;
 import com.exilesoft.exercise.company.type.CompanyTypeRepository;
-import com.exilesoft.exercise.company.type.InmemoryCompanyTypeRepository;
 
 @SuppressWarnings("serial")
 public class CreateCompanyPage extends WebPage {
 
-    transient private final CompanyTypeRepository companyTypeRepository = new InmemoryCompanyTypeRepository();
-    transient private final CompanyRepository companyRepository = new InmemoryCompanyRepository();
+    @Inject
+    private CompanyTypeRepository companyTypeRepository;
+
+    @Inject
+    private CompanyRepository companyRepository;
 
 
     public class CompanyForm extends Form<Company> {
