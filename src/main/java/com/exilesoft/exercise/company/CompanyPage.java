@@ -5,6 +5,9 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import com.exilesoft.exercise.person.Person;
+import com.exilesoft.exercise.person.PersonFormPanel;
+
 public class CompanyPage extends WebPage {
 
     private transient CompanyRepository repository = new InmemoryCompanyRepository();
@@ -13,6 +16,7 @@ public class CompanyPage extends WebPage {
         Company company = repository.find(parameters.get("id").toLong());
         add(new Label("heading", "Details for " + company.getCompanyName()));
         add(new Label("type", company.getCompanyType().getTypeName()));
+        add(new PersonFormPanel("personForm", new Person()));
     }
 
     public static BookmarkablePageLink<Void> link(String id, Long companyId, String companyName) {

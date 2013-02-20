@@ -70,7 +70,7 @@ public class AddressBookWebTest {
 	private void addPersonToCompany(String company, String personName, String personEmail) {
 		navigateToCompany(company);
 	    browser.findElement(By.name("personName")).sendKeys(personName);
-	    browser.findElement(By.name("personEmail")).sendKeys(personEmail);
+	    browser.findElement(By.name("emailAddress")).sendKeys(personEmail);
 	    browser.findElement(By.name("personName")).submit();
 	}
 
