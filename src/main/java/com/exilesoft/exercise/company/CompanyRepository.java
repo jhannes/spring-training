@@ -8,4 +8,6 @@ public interface CompanyRepository {
 
     void create(Company newObject);
 
+    Company find(Long id);
+
 }

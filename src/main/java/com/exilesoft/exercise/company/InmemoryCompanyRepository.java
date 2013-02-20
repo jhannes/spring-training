@@ -17,4 +17,12 @@ public class InmemoryCompanyRepository implements CompanyRepository {
         return companies;
     }
 
+    @Override
+    public Company find(Long id) {
+        for (Company company : companies) {
+            if (company.getId().equals(id)) return company;
+        }
+        return null;
+    }
+
 }

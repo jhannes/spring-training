@@ -6,7 +6,7 @@ import com.exilesoft.exercise.company.type.CompanyType;
 
 public class Company implements Serializable {
 
-    private long idSequence;
+    private static long idSequence;
 
     private String companyName;
     private String companyUrl;

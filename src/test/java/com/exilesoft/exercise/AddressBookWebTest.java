@@ -61,6 +61,7 @@ public class AddressBookWebTest {
 	}
 
 	private void verifyCompanyDetails(String company, String heading, String type) {
+	    browser.get(url);
 		navigateToCompany(company);
 	    assertThat(browser.findElement(By.id("heading")).getText()).isEqualTo(heading);
 	    assertThat(browser.findElement(By.id("type")).getText()).isEqualTo(type);
@@ -80,6 +81,7 @@ public class AddressBookWebTest {
 	}
 
 	private void navigateToCompany(String company) {
+	    browser.get(url);
 		browser.findElement(By.linkText("List companies")).click();
 	    browser.findElement(By.linkText(company)).click();
 	}
