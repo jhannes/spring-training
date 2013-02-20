@@ -19,62 +19,78 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 public class AddressBookWebTest {
 
     private WebDriver browser;
+	private String url;
 
     @Test
     public void fullScenarioTest() throws Exception {
-        String url = startWebServer("Johannes's addresses");
-
+        this.url = startWebServer("Johannes's addresses");
         this.browser = createWebBrowser();
-        browser.get(url);
 
+        browser.get(url);
         assertThat(browser.getTitle()).isEqualTo("Johannes's addresses :: Menu");
 
         addCompany("Visma", "http://www.visma.com/", "Software");
         addCompany("Exilesoft", "http://www.exilesoft.com/", "Offshoring");
+        verifyCompanySearch("XILE", "Exilesoft", "Visma");
+        verifyCompanyDetails("Exilesoft", "Details for Exilesoft", "Offshoring");
 
-        browser.findElement(By.linkText("List companies")).click();
-        assertThat(browser.findElement(By.linkText("Visma"))).isNotNull();
-        assertThat(browser.findElement(By.linkText("Exilesoft"))).isNotNull();
-        browser.findElement(By.name("nameQuery")).sendKeys("XILE");
-        browser.findElement(By.name("nameQuery")).submit();
-        //assertThat(browser.findElements(By.linkText("Visma"))).isEmpty();
-        browser.findElement(By.linkText("Exilesoft")).click();
+        addPersonToCompany("Exilesoft", "Johannes Brodwall", "jbr@exilesoft.com");
+        verifyPersonPresent("Johannes Brodwall (Exilesoft)");
+    }
 
-        assertThat(browser.findElement(By.id("heading")).getText()).isEqualTo("Details for Exilesoft");
-        assertThat(browser.findElement(By.id("type")).getText()).isEqualTo("Offshoring");
+	private void addCompany(String companyName, String companyUrl, String companyType) {
+	    browser.findElement(By.linkText("Add company")).click();
+	    browser.findElement(By.name("companyName")).sendKeys(companyName);
+	    browser.findElement(By.name("companyUrl")).sendKeys(companyUrl);
+	    findSelectOptionWithText("companyType", companyType).setSelected();
+	    browser.findElement(By.name("companyName")).submit();
+	}
 
-        addPerson("Johannes Brodwall", "jbr@exilesoft.com");
+	private void verifyCompanySearch(String searchTerm, String matchingCompany, String nonMatchingCompany) {
+		browser.findElement(By.linkText("List companies")).click();
+	    assertThat(browser.findElement(By.linkText(nonMatchingCompany))).isNotNull();
+	    assertThat(browser.findElement(By.linkText(matchingCompany))).isNotNull();
+	    browser.findElement(By.name("nameQuery")).sendKeys(searchTerm);
+	    browser.findElement(By.name("nameQuery")).submit();
+	    //assertThat(browser.findElements(By.linkText(nonMatchingCompany))).isEmpty();
+	    browser.findElement(By.linkText(matchingCompany)).click();
+	}
 
+	private void verifyCompanyDetails(String company, String heading, String type) {
+		navigateToCompany(company);
+	    assertThat(browser.findElement(By.id("heading")).getText()).isEqualTo(heading);
+	    assertThat(browser.findElement(By.id("type")).getText()).isEqualTo(type);
+	}
+
+	private void addPersonToCompany(String company, String personName, String personEmail) {
+		navigateToCompany(company);
+	    browser.findElement(By.name("personName")).sendKeys(personName);
+	    browser.findElement(By.name("personEmail")).sendKeys(personEmail);
+	    browser.findElement(By.name("personName")).submit();
+	}
+
+	private void verifyPersonPresent(String person) {
         browser.get(url);
         browser.findElement(By.linkText("List people")).click();
-        assertThat(browser.findElement(By.id("people")).getText()).contains("Johannes Brodwall (Exilesoft)");
-    }
+        assertThat(browser.findElement(By.id("people")).getText()).contains(person);
+	}
 
-    private void addPerson(String personName, String personEmail) {
-        browser.findElement(By.name("personName")).sendKeys(personName);
-        browser.findElement(By.name("personEmail")).sendKeys(personEmail);
-        browser.findElement(By.name("personName")).submit();
-    }
+	private void navigateToCompany(String company) {
+		browser.findElement(By.linkText("List companies")).click();
+	    browser.findElement(By.linkText(company)).click();
+	}
 
-    private void addCompany(String companyName, String companyUrl, String companyType) {
-        browser.findElement(By.linkText("Add company")).click();
-        browser.findElement(By.name("companyName")).sendKeys(companyName);
-        browser.findElement(By.name("companyUrl")).sendKeys(companyUrl);
-        findSelectOptionWithText("companyType", companyType).setSelected();
-        browser.findElement(By.name("companyName")).submit();
-    }
+	private WebElement findSelectOptionWithText(String selectName, String optionText) {
+	    List<String> options = new ArrayList<>();
+	    for (WebElement webElement : browser.findElement(By.name(selectName)).findElements(By.tagName("option"))) {
+	        if (webElement.getText().equals(optionText)) return webElement;
+	        options.add(webElement.getText());
+	    }
+	    fail("Can't find " + optionText + " in " + options);
+	    return null;
+	}
 
-    private WebElement findSelectOptionWithText(String selectName, String optionText) {
-        List<String> options = new ArrayList<>();
-        for (WebElement webElement : browser.findElement(By.name(selectName)).findElements(By.tagName("option"))) {
-            if (webElement.getText().equals(optionText)) return webElement;
-            options.add(webElement.getText());
-        }
-        fail("Can't find " + optionText + " in " + options);
-        return null;
-    }
-
-    private String startWebServer(String applicationName) throws Exception {
+	private String startWebServer(String applicationName) throws Exception {
         Server server = new Server(0);
         WebAppContext webApplication = new WebAppContext("src/main/webapp", "/root");
         server.setHandler(webApplication);
