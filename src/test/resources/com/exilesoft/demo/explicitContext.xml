@@ -1,0 +1,28 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean class="com.exilesoft.demo.Application">
+		<property name="applicationInfo" ref="applicationInfo" />
+	</bean>
+
+	<bean id="applicationInfoTarget" class="com.exilesoft.demo.ApplicationInfoImpl">
+		<constructor-arg ref="username" />
+		<constructor-arg ref="password" />
+	</bean>
+	
+	<bean id="applicationInfo" class="com.exilesoft.demo.security.SecurityProxy">
+		<property name="targetObject" ref="applicationInfoTarget" />
+		<property name="targetInterface" value="com.exilesoft.demo.ApplicationInfo" />
+	</bean>
+
+	<bean id="username" class="java.lang.String">
+		<constructor-arg type="java.lang.String" value="public" />
+	</bean>
+	<bean id="password" class="java.lang.String">
+		<constructor-arg type="java.lang.String" value="secret" />
+	</bean>
+</beans>
