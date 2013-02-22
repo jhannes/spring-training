@@ -25,6 +25,11 @@ public class InmemoryCompanyRepository extends AbstractInmemoryRepository implem
     }
 
     @Override
+    public void update(Company object) {
+    	companies.put(getId(object), object);
+    }
+
+	@Override
     public Company find(Long id) {
         return clone(companies.get(id));
     }

@@ -10,4 +10,6 @@ public interface CompanyRepository {
 
     Company find(Long id);
 
+	void update(Company object);
+
 }

@@ -41,4 +41,10 @@ public class AbstractJpaRepository<T> {
 	    return entityManager.find(entityType, id);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void update(T object) {
+	    entityManager.merge(object);
+	    entityManager.flush();
+	}
+
 }

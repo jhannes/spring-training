@@ -30,6 +30,18 @@ public abstract class AbstractPersonRepositoryTest {
             .isEqualsToByComparingFields(person);
     }
 
+	@Test
+	public void shouldBeAssociatedWithCompany() throws Exception {
+		Person person = randomPerson();
+		getRepository().create(person);
+
+		person.getCompany().setCompanyName(RandomData.randomWord());
+		getCompanyRepository().update(person.getCompany());
+
+		assertThat(getRepository().find(person.getId()).getCompany().getCompanyName())
+			.isEqualTo(person.getCompany().getCompanyName());
+	}
+
     private Person randomPerson() {
 		Person person = new Person(company);
 		person.setPersonName(RandomData.randomWord() + " " + RandomData.randomWord() + "son");

@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 
+import com.exilesoft.exercise.company.Company;
+
 public class AbstractInmemoryRepository {
 
     private long idSequence = 0;
@@ -36,5 +38,17 @@ public class AbstractInmemoryRepository {
             throw new RuntimeException(e);
         }
     }
+
+    protected Long getId(Company object) {
+        try {
+            Field field = object.getClass().getDeclaredField("id");
+            field.setAccessible(true);
+			return (Long) field.get(object);
+        } catch (NoSuchFieldException|SecurityException|IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+	}
+
+
 
 }
