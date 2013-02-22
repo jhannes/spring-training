@@ -11,7 +11,7 @@ import org.eclipse.jetty.plus.jndi.EnvEntry;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.h2.jdbcx.JdbcDataSource;
-import org.hibernate.cfg.Environment;
+import org.hibernate.cfg.AvailableSettings;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -115,13 +115,14 @@ public class AddressBookWebTest {
 	}
 
 	private String startWebServer() throws Exception {
+		System.out.println("Starting web server");
 	    System.setProperty("wicket.configuration", "DEPLOYMENT");
 
 	    JdbcDataSource dataSource = new JdbcDataSource();
-	    dataSource.setURL("jdbc:h2:mem:integration;DB_CLOSE_DELAY=-1");
+	    dataSource.setURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
 	    dataSource.setUser("sa");
 	    new EnvEntry("java:/DefaultDS", dataSource);
-		System.setProperty(Environment.HBM2DDL_AUTO, "create");
+		System.setProperty(AvailableSettings.HBM2DDL_AUTO, "create");
 
         Server server = new Server(0);
         WebAppContext webApplication = new WebAppContext("src/main/webapp", "/root");

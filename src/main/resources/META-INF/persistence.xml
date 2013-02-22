@@ -3,6 +3,8 @@
   <persistence-unit name="addressBookUnit" transaction-type="RESOURCE_LOCAL">
     <jta-data-source>java:/DefaultDS</jta-data-source>
     <class>com.exilesoft.exercise.company.type.CompanyType</class>
+    <class>com.exilesoft.exercise.company.Company</class>
+    <class>com.exilesoft.exercise.person.Person</class>
   </persistence-unit>
 
 </persistence>
