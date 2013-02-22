@@ -3,13 +3,9 @@ package com.exilesoft.exercise;
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.fest.assertions.api.Assertions.fail;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jetty.plus.jndi.EnvEntry;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.webapp.WebAppContext;
 import org.h2.jdbcx.JdbcDataSource;
 import org.hibernate.cfg.AvailableSettings;
 import org.junit.Test;
@@ -18,26 +14,20 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import com.exilesoft.exercise.company.type.CompanyType;
-import com.exilesoft.exercise.company.type.CompanyTypeRepository;
 
 public class AddressBookWebTest {
 
     private WebDriver browser;
-	private String url;
-    private WebApplicationContext applicationContext;
+	private WebServer webServer;
 
     @Test
     public void fullScenarioTest() throws Exception {
-        this.url = startWebServer();
-        setApplicationName("Johannes's addresses");
-        setCompanyTypes("Software", "Offshoring");
+        startWebServer();
+        webServer.setApplicationName("Johannes's addresses");
+        webServer.setCompanyTypes("Software", "Offshoring");
         this.browser = createWebBrowser();
 
-        browser.get(url);
+        browser.get(webServer.getWebAppUrl());
         assertThat(browser.getTitle()).isEqualTo("Johannes's addresses :: Menu");
 
         addCompany("Visma", "http://www.visma.com/", "Software");
@@ -47,17 +37,6 @@ public class AddressBookWebTest {
 
         addPersonToCompany("Exilesoft", "Johannes Brodwall", "jbr@exilesoft.com");
         verifyPersonPresent("Johannes Brodwall (Exilesoft)");
-    }
-
-	private void setCompanyTypes(String... types) {
-        CompanyTypeRepository typeRepository = applicationContext.getBean(CompanyTypeRepository.class);
-        for (String type : types) {
-            typeRepository.create(new CompanyType(type));
-        }
-    }
-
-    private void setApplicationName(String applicationName) {
-        applicationContext.getBean(ApplicationInfo.class).setName(applicationName);
     }
 
     private void addCompany(String companyName, String companyUrl, String companyType) {
@@ -79,7 +58,7 @@ public class AddressBookWebTest {
 	}
 
 	private void verifyCompanyDetails(String company, String heading, String type) {
-	    browser.get(url);
+	    browser.get(webServer.getWebAppUrl());
 		navigateToCompany(company);
 	    assertThat(browser.findElement(By.id("heading")).getText()).isEqualTo(heading);
 	    assertThat(browser.findElement(By.id("type")).getText()).isEqualTo(type);
@@ -93,13 +72,13 @@ public class AddressBookWebTest {
 	}
 
 	private void verifyPersonPresent(String person) {
-        browser.get(url);
+        browser.get(webServer.getWebAppUrl());
         browser.findElement(By.linkText("List people")).click();
         assertThat(browser.findElement(By.id("people")).getText()).contains(person);
 	}
 
 	private void navigateToCompany(String company) {
-	    browser.get(url);
+	    browser.get(webServer.getWebAppUrl());
 		browser.findElement(By.linkText("List companies")).click();
 	    browser.findElement(By.linkText(company)).click();
 	}
@@ -115,22 +94,16 @@ public class AddressBookWebTest {
 	}
 
 	private String startWebServer() throws Exception {
-		System.out.println("Starting web server");
 	    System.setProperty("wicket.configuration", "DEPLOYMENT");
+	    System.setProperty(AvailableSettings.HBM2DDL_AUTO, "create");
 
+	    this.webServer = new WebServer(0, "/root");
 	    JdbcDataSource dataSource = new JdbcDataSource();
 	    dataSource.setURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
 	    dataSource.setUser("sa");
-	    new EnvEntry("java:/DefaultDS", dataSource);
-		System.setProperty(AvailableSettings.HBM2DDL_AUTO, "create");
-
-        Server server = new Server(0);
-        WebAppContext webApplication = new WebAppContext("src/main/webapp", "/root");
-        server.setHandler(webApplication);
-        server.start();
-
-        applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(webApplication.getServletContext());
-        return new URL("http", "localhost", server.getConnectors()[0].getLocalPort(), "/root").toString();
+	    webServer.setDataSource(dataSource);
+	    webServer.start();
+        return webServer.getWebAppUrl().toString();
     }
 
     private WebDriver createWebBrowser() {
