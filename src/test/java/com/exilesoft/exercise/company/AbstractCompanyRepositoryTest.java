@@ -5,7 +5,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import org.junit.Test;
 
 import com.exilesoft.exercise.RandomData;
-import com.exilesoft.exercise.company.type.CompanyType;
+import com.exilesoft.exercise.company.type.AbstractCompanyTypeRepositoryTest;
 
 public abstract class AbstractCompanyRepositoryTest {
 
@@ -30,19 +30,13 @@ public abstract class AbstractCompanyRepositoryTest {
         	.contains(company1, company2);
 	}
 
-
-    private Company randomCompany() {
+    public static Company randomCompany() {
 		Company company = new Company();
 		company.setCompanyName(RandomData.randomWord() + ", Inc");
 		company.setCompanyUrl(RandomData.randomUrl());
-		company.setCompanyType(randomCompanyType());
+		company.setCompanyType(AbstractCompanyTypeRepositoryTest.randomCompanyType());
 		return company;
 	}
 
-    private CompanyType randomCompanyType() {
-        return new CompanyType(RandomData.randomWord());
-    }
-
     protected abstract CompanyRepository createRepository();
-
 }

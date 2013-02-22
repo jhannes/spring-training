@@ -2,20 +2,30 @@ package com.exilesoft.exercise.person;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 import com.exilesoft.exercise.company.Company;
 import com.google.common.base.Objects;
 
+@Entity
 public class Person implements Serializable {
 
     private String personName;
 
     private String emailAddress;
 
-    private final Company company;
+    @ManyToOne
+    private Company company;
 
-	private static long idSequence;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-	private final Long id = idSequence++;
+	Person() {
+	}
 
     public Person(Company company) {
         this.company = company;

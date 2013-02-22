@@ -1,6 +1,7 @@
 package com.exilesoft.exercise.company.type;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+
 import org.junit.Test;
 
 import com.exilesoft.exercise.RandomData;
@@ -29,7 +30,7 @@ public abstract class AbstractCompanyTypeRepositoryTest {
             .contains(type1).contains(type2);
     }
 
-    private CompanyType randomCompanyType() {
+    public static CompanyType randomCompanyType() {
         return new CompanyType(RandomData.randomWord());
     }
 
