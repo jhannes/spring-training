@@ -21,7 +21,7 @@ public class JavaConfigTest {
     	}
 
     	@Bean
-        public Application application(ApplicationInfo applicationInfo) {
+        public Application application() {
             return new Application();
         }
     }
