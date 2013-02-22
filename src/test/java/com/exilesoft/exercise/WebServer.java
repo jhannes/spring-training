@@ -39,7 +39,7 @@ public class WebServer {
 	}
 
 	private static void shutdown(int port, String shutdownToken) throws IOException {
-		URL url = new URL("http", "localhost", port, "/shutdown?shutdownToken=" + shutdownToken);
+		URL url = new URL("http", "localhost", port, "/shutdown?token=" + shutdownToken);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("POST");
 		try {
