@@ -1,18 +1,11 @@
 package com.exilesoft.exercise.person;
 
-import javax.inject.Inject;
-
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 
-import com.exilesoft.exercise.ApplicationMenuPage;
-
 public class PersonFormPanel extends Panel {
-
-    @Inject
-    private PersonRepository personRepository;
 
     public class PersonForm extends Form<Person> {
 
@@ -25,8 +18,7 @@ public class PersonFormPanel extends Panel {
 
         @Override
         protected void onSubmit() {
-            personRepository.create(getModelObject());
-            setResponsePage(ApplicationMenuPage.class);
+        	super.onSubmit();
         }
 
     }

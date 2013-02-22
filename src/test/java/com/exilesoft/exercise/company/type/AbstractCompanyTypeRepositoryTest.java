@@ -30,20 +30,6 @@ public abstract class AbstractCompanyTypeRepositoryTest {
             .contains(type1).contains(type2);
     }
 
-    @Test
-	public void shouldUpdateCompanyType() throws Exception {
-        CompanyType companyType = randomCompanyType();
-        getRepository().create(companyType);
-
-        companyType.setTypeName(RandomData.randomWord());
-        getRepository().update(companyType);
-
-        assertThat(getRepository().find(companyType.getId()).getTypeName())
-        	.isEqualTo(companyType.getTypeName());
-	}
-
-
-
     public static CompanyType randomCompanyType() {
         return new CompanyType(RandomData.randomWord());
     }

@@ -5,6 +5,7 @@ import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -48,6 +49,18 @@ public class WebServer {
 		this.shutdownToken = shutdownToken;
 	}
 
+	public void start() throws Exception {
+		if (shutdownToken != null) {
+			handlers.addHandler(new ShutdownHandler(server, shutdownToken));
+		}
+		handlers.addHandler(webApplication);
+		server.start();
+	}
+
+	public<T> T getBean(Class<T> beanClass) {
+		return getAppContext().getBean(beanClass);
+	}
+
 	public String getWebAppUrl() {
 		try {
 			return new URL("http", "localhost", server.getConnectors()[0].getLocalPort(),
@@ -57,20 +70,16 @@ public class WebServer {
 		}
 	}
 
-	public void start() throws Exception {
-		if (shutdownToken != null) {
-			handlers.addHandler(new ShutdownHandler(server, shutdownToken));
-		}
-		handlers.addHandler(webApplication);
-		server.start();
-	}
-
 	public void setApplicationName(String applicationName) {
-	    getAppContext().getBean(ApplicationInfo.class).setName(applicationName);
+	    getBean(ApplicationInfo.class).setName(applicationName);
 	}
 
-	public void setCompanyTypes(String... types) {
-	    CompanyTypeRepository typeRepository = getAppContext().getBean(CompanyTypeRepository.class);
+	public List<CompanyType> getCompanyTypes() {
+		return getBean(CompanyTypeRepository.class).list();
+	}
+
+	public void addCompanyTypes(String... types) {
+	    CompanyTypeRepository typeRepository = getBean(CompanyTypeRepository.class);
 	    for (String type : types) {
 	        typeRepository.create(new CompanyType(type));
 	    }
@@ -91,7 +100,10 @@ public class WebServer {
 		server.attemptShutdown();
 		server.setDataSource(dataSource);
 		server.start();
-		server.setCompanyTypes("Software", "Offshoring");
+
+		if(server.getCompanyTypes().isEmpty()) {
+			server.addCompanyTypes("Software", "Offshoring");
+		}
 
 		System.out.println(server.getWebAppUrl());
 	}

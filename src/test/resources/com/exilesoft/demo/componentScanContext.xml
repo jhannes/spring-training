@@ -11,9 +11,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
     <aop:aspectj-autoproxy />
     <context:annotation-config />
-
-	<bean class="com.exilesoft.demo.Application" />
-	<bean class="com.exilesoft.demo.ApplicationInfoImpl" />
+    <context:component-scan base-package="com.exilesoft.demo" />
 	
     <bean class="com.exilesoft.demo.security.SecurityCheckAspect"/>
 

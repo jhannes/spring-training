@@ -22,11 +22,6 @@ public class InmemoryCompanyTypeRepository extends AbstractInmemoryRepository im
 	}
 
 	@Override
-	public void update(CompanyType object) {
-		entities.put(getId(object), object);
-	}
-
-	@Override
 	public CompanyType find(Long id) {
 	    return clone(entities.get(id));
 	}

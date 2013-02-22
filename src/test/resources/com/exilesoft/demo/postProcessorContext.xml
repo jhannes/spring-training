@@ -8,16 +8,10 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	</bean>
 
 	<bean id="applicationInfo" class="com.exilesoft.demo.ApplicationInfoImpl">
-		<constructor-arg ref="username" />
-		<constructor-arg ref="password" />
+		<constructor-arg value="public" />
+		<constructor-arg value="secret" />
 	</bean>
 	
     <bean class="com.exilesoft.demo.security.SecurityProxyPostProcessor"/>
 
-	<bean id="username" class="java.lang.String">
-		<constructor-arg type="java.lang.String" value="public" />
-	</bean>
-	<bean id="password" class="java.lang.String">
-		<constructor-arg type="java.lang.String" value="secret" />
-	</bean>
 </beans>

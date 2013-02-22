@@ -20,7 +20,6 @@ public class PlainJdbcCompanyTypeRepository implements CompanyTypeRepository {
     private static final String SELECT_ALL = "select * from CompanyType";
     private static final String INSERT_SQL = "insert into CompanyType (id, typeName) values (null, ?)";
     private static final String SELECT_BY_ID = "select * from CompanyType where id = ?";
-    private static final String UPDATE_SQL = "update CompanyType set typeName = ? where id = ?";
     private final DataSource dataSource;
 
     public PlainJdbcCompanyTypeRepository(DataSource dataSource) {
@@ -79,19 +78,6 @@ public class PlainJdbcCompanyTypeRepository implements CompanyTypeRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void update(CompanyType object) {
-        try (Connection connection = getConnection();
-        		PreparedStatement stmt = connection.prepareStatement(UPDATE_SQL)) {
-            stmt.setString(1, object.getTypeName());
-            stmt.setLong(2, object.getId());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
     private Connection getConnection() throws SQLException {

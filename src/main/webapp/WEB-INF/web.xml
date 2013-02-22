@@ -22,19 +22,9 @@
     </filter>
 
     <filter-mapping>
-        <filter-name>openEntityManagerInView</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>
-
-
-    <filter-mapping>
         <filter-name>wicket.addressBook</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
-
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

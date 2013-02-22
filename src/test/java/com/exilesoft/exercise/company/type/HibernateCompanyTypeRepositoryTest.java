@@ -23,7 +23,6 @@ public class HibernateCompanyTypeRepositoryTest extends AbstractCompanyTypeRepos
     }
 
     private static SessionFactory createSessionFactory() {
-    	System.out.println("Hibernate...");
         JdbcDataSource dataSource = new JdbcDataSource();
         dataSource.setURL("jdbc:h2:mem:integration;DB_CLOSE_DELAY=-1");
         dataSource.setUser("sa");

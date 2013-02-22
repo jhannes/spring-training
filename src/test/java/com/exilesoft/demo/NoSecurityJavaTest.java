@@ -8,15 +8,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-public class SimpleJavaConfigTest {
+public class NoSecurityJavaTest {
 
 	@Configuration
 	public static class Config {
-
-    	@Bean
-    	public ApplicationInfo applicationInfo() throws Exception {
-    		return new ApplicationInfoImpl("public", "secret");
-    	}
 
     	@Bean
         public Application application() {

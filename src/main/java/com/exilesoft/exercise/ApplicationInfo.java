@@ -2,6 +2,7 @@ package com.exilesoft.exercise;
 
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class ApplicationInfo {
 

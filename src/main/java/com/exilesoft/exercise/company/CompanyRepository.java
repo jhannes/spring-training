@@ -2,10 +2,12 @@ package com.exilesoft.exercise.company;
 
 import java.util.List;
 
-import com.exilesoft.exercise.infrastructure.Repository;
+public interface CompanyRepository {
 
-public interface CompanyRepository extends Repository<Company> {
+	void create(Company company);
 
-	List<Company> findByName(String nameQuery);
+	List<Company> list();
+
+	Company find(Long id);
 
 }

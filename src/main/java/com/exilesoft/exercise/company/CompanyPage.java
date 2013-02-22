@@ -1,7 +1,5 @@
 package com.exilesoft.exercise.company;
 
-import javax.inject.Inject;
-
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -14,8 +12,7 @@ import com.exilesoft.exercise.person.PersonFormPanel;
 
 public class CompanyPage extends WebPage {
 
-    @Inject
-    private CompanyRepository repository;
+    private transient final CompanyRepository repository = new InmemoryCompanyRepository();
 
     public CompanyPage(PageParameters parameters) {
         Company company = repository.find(parameters.get("id").toLong());

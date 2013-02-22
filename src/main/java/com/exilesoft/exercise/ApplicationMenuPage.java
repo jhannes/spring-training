@@ -1,15 +1,13 @@
 package com.exilesoft.exercise;
 
-import javax.inject.Inject;
-
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.protocol.http.WebApplication;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 
 public class ApplicationMenuPage extends WebPage {
-
-	@Inject
-	private ApplicationInfo applicationInfo;
 
 	public ApplicationMenuPage() {
 		add(new Label("title", getTitle()));
@@ -17,6 +15,7 @@ public class ApplicationMenuPage extends WebPage {
 	}
 
 	private String getTitle() {
-		return applicationInfo.getName() + " :: Menu";
+		WebApplicationContext appContext = WebApplicationContextUtils.getRequiredWebApplicationContext(WebApplication.get().getServletContext());
+		return null + " :: Menu";
 	}
 }

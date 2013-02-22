@@ -21,14 +21,4 @@ public class InmemoryPersonRepository extends AbstractInmemoryRepository impleme
 	    return new ArrayList<>(entities.values());
 	}
 
-	@Override
-	public void update(Person object) {
-		entities.put(getId(object), object);
-	}
-
-	@Override
-	public Person find(Long id) {
-	    return clone(entities.get(id));
-	}
-
 }

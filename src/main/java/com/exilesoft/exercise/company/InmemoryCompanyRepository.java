@@ -12,17 +12,6 @@ public class InmemoryCompanyRepository extends AbstractInmemoryRepository implem
 	private final Map<Long, Company> entities = new HashMap<>();
 
 	@Override
-	public List<Company> findByName(String nameQuery) {
-		List<Company> result = new ArrayList<>();
-		for (Company company : list()) {
-			if (company.getCompanyName().toLowerCase().contains(nameQuery.toLowerCase())) {
-				result.add(company);
-			}
-		}
-		return result;
-	}
-
-	@Override
 	public void create(Company newObject) {
 	    entities.put(generateId(newObject), newObject);
 	}
@@ -33,14 +22,8 @@ public class InmemoryCompanyRepository extends AbstractInmemoryRepository implem
 	}
 
 	@Override
-	public void update(Company object) {
-		entities.put(getId(object), object);
-	}
-
-	@Override
 	public Company find(Long id) {
 	    return clone(entities.get(id));
 	}
-
 
 }
