@@ -26,25 +26,33 @@ public class AbstractJpaRepository<T> {
 
 	@Transactional(propagation=Propagation.REQUIRED)
 	public List<T> list() {
-	    CriteriaQuery<T> query = entityManager.getCriteriaBuilder().createQuery(entityType);
-	    return entityManager.createQuery(query.select(query.from(entityType))).getResultList();
+	    CriteriaQuery<T> query = getEntityManager().getCriteriaBuilder().createQuery(getEntityType());
+	    return getEntityManager().createQuery(query.select(query.from(getEntityType()))).getResultList();
 	}
 
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void create(T object) {
-	    entityManager.persist(object);
-	    entityManager.flush();
+	    getEntityManager().persist(object);
+	    getEntityManager().flush();
 	}
 
 	@Transactional(propagation=Propagation.REQUIRED)
 	public T find(Long id) {
-	    return entityManager.find(entityType, id);
+	    return getEntityManager().find(getEntityType(), id);
 	}
 
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void update(T object) {
-	    entityManager.merge(object);
-	    entityManager.flush();
+	    getEntityManager().merge(object);
+	    getEntityManager().flush();
+	}
+
+	protected EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	protected Class<T> getEntityType() {
+		return entityType;
 	}
 
 }

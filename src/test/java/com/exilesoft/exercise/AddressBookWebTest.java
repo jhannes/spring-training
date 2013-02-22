@@ -37,6 +37,8 @@ public class AddressBookWebTest {
 
         addPersonToCompany("Exilesoft", "Johannes Brodwall", "jbr@exilesoft.com");
         verifyPersonPresent("Johannes Brodwall (Exilesoft)");
+        verifyCompanyContainsPerson("Exilesoft", "Johannes Brodwall");
+        verifyCompanyDoesNotContainPerson("Visma", "Johannes Brodwall");
     }
 
     private void addCompany(String companyName, String companyUrl, String companyType) {
@@ -53,7 +55,7 @@ public class AddressBookWebTest {
 	    assertThat(browser.findElement(By.linkText(matchingCompany))).isNotNull();
 	    browser.findElement(By.name("nameQuery")).sendKeys(searchTerm);
 	    browser.findElement(By.name("nameQuery")).submit();
-	    //assertThat(browser.findElements(By.linkText(nonMatchingCompany))).isEmpty();
+	    assertThat(browser.findElements(By.linkText(nonMatchingCompany))).isEmpty();
 	    browser.findElement(By.linkText(matchingCompany)).click();
 	}
 
@@ -75,6 +77,16 @@ public class AddressBookWebTest {
         browser.get(webServer.getWebAppUrl());
         browser.findElement(By.linkText("List people")).click();
         assertThat(browser.findElement(By.id("people")).getText()).contains(person);
+	}
+
+	private void verifyCompanyContainsPerson(String company, String person) {
+		navigateToCompany(company);
+		assertThat(browser.findElement(By.id("people")).getText()).contains(person);
+	}
+
+	private void verifyCompanyDoesNotContainPerson(String company, String person) {
+		navigateToCompany(company);
+		assertThat(browser.findElement(By.id("people")).getText()).doesNotContain(person);
 	}
 
 	private void navigateToCompany(String company) {

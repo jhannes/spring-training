@@ -1,5 +1,7 @@
 package com.exilesoft.exercise.company;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.wicket.markup.html.WebPage;
@@ -17,7 +19,12 @@ public class ListCompaniesPage extends WebPage {
     private CompanyRepository repository;
 
     public ListCompaniesPage() {
-        add(new ListView<Company>("companies", repository.list()) {
+    	this(null);
+	}
+
+    public ListCompaniesPage(List<Company> list) {
+    	if (list == null) list = repository.list();
+        add(new ListView<Company>("companies", list) {
 
             @Override
             protected void populateItem(ListItem<Company> item) {
@@ -34,6 +41,11 @@ public class ListCompaniesPage extends WebPage {
         add(new Form<String>("companySearch") {
             {
                 add(new TextField<>("nameQuery", queryModel));
+            }
+
+            @Override
+            protected void onSubmit() {
+            	setResponsePage(new ListCompaniesPage(repository.findByName(queryModel.getObject())));
             }
         });
     }

@@ -1,12 +1,16 @@
 package com.exilesoft.exercise.company;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.exilesoft.exercise.company.type.CompanyType;
+import com.exilesoft.exercise.person.Person;
 import com.google.common.base.Objects;
 
 @Entity
@@ -21,6 +25,9 @@ public class Company implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+
+    @OneToMany(mappedBy = "company")
+	private final List<Person> people = new ArrayList<>();
 
     public String getCompanyName() {
         return companyName;
@@ -74,5 +81,15 @@ public class Company implements Serializable {
 				.add("companyName", companyName).add("companyUrl", companyUrl)
 				.add("companyType", companyType)
 				.toString();
+	}
+
+	public List<Person> getPeople() {
+		return people;
+	}
+
+	public Person createPerson() {
+		Person person = new Person(this);
+		this.people.add(person);
+		return person;
 	}
 }

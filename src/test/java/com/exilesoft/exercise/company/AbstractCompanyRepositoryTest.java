@@ -2,6 +2,8 @@ package com.exilesoft.exercise.company;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import com.exilesoft.exercise.RandomData;
@@ -21,7 +23,9 @@ public abstract class AbstractCompanyRepositoryTest {
         assertThat(createRepository().find(company.getId()))
             .isNotSameAs(company)
             .isEqualTo(company)
-            .isEqualsToByComparingFields(company);
+            .isLenientEqualsToByIgnoringFields(company, "people");
+        assertThat(new ArrayList<>(createRepository().find(company.getId()).getPeople()))
+	        .isEqualTo(new ArrayList<>(company.getPeople()));
     }
 
     @Test
@@ -33,6 +37,21 @@ public abstract class AbstractCompanyRepositoryTest {
         assertThat(createRepository().list())
         	.contains(company1, company2);
 	}
+
+    @Test
+	public void shouldSearchByNameLike() throws Exception {
+		Company matchingCompany = randomCompany();
+		matchingCompany.setCompanyName("Exilesoft");
+		Company nonMatchingCompany = randomCompany();
+
+		createRepository().create(matchingCompany);
+		createRepository().create(nonMatchingCompany);
+
+		assertThat(createRepository().findByName("XILE"))
+			.contains(matchingCompany)
+			.doesNotContain(nonMatchingCompany);
+	}
+
 
     @Test
 	public void shouldBeAssociatedWithType() throws Exception {
