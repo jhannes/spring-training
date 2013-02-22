@@ -6,10 +6,14 @@ import org.junit.Test;
 
 import com.exilesoft.exercise.RandomData;
 import com.exilesoft.exercise.company.type.AbstractCompanyTypeRepositoryTest;
+import com.exilesoft.exercise.company.type.CompanyType;
+import com.exilesoft.exercise.company.type.CompanyTypeRepository;
 
 public abstract class AbstractCompanyRepositoryTest {
 
-    @Test
+    private static CompanyType companyType = AbstractCompanyTypeRepositoryTest.randomCompanyType();
+
+	@Test
     public void shouldPersistCompany() throws Exception {
         Company company = randomCompany();
         createRepository().create(company);
@@ -30,13 +34,25 @@ public abstract class AbstractCompanyRepositoryTest {
         	.contains(company1, company2);
 	}
 
+    @Test
+	public void shouldBeAssociatedWithType() throws Exception {
+        Company company = randomCompany();
+        createRepository().create(company);
+
+        company.getCompanyType().setTypeName(RandomData.randomWord());
+        createTypeRepository().update(company.getCompanyType());
+	}
+
+
     public static Company randomCompany() {
 		Company company = new Company();
 		company.setCompanyName(RandomData.randomWord() + ", Inc");
 		company.setCompanyUrl(RandomData.randomUrl());
-		company.setCompanyType(AbstractCompanyTypeRepositoryTest.randomCompanyType());
+		company.setCompanyType(companyType);
 		return company;
 	}
 
-    protected abstract CompanyRepository createRepository();
+    protected abstract CompanyTypeRepository createTypeRepository();
+
+	protected abstract CompanyRepository createRepository();
 }

@@ -28,6 +28,10 @@ public class CompanyType implements Serializable {
         return typeName;
     }
 
+    public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
     public Long getId() {
         return id;
     }
@@ -53,4 +57,5 @@ public class CompanyType implements Serializable {
     public String toString() {
         return Objects.toStringHelper(this).add("id", id).add("typeName", typeName).toString();
     }
+
 }

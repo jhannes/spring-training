@@ -1,13 +1,7 @@
 package com.exilesoft.exercise.company.type;
 
-import java.util.List;
+import com.exilesoft.exercise.infrastructure.Repository;
 
-public interface CompanyTypeRepository {
-
-    List<CompanyType> list();
-
-    void create(CompanyType object);
-
-    CompanyType find(Long id);
+public interface CompanyTypeRepository extends Repository<CompanyType> {
 
 }

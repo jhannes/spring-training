@@ -30,6 +30,11 @@ public class HibernateCompanyTypeRepository implements CompanyTypeRepository {
     }
 
     @Override
+    public void update(CompanyType object) {
+    	getSession().save(object);
+    }
+
+    @Override
     public CompanyType find(Long id) {
         return (CompanyType) getSession().get(CompanyType.class, id);
     }

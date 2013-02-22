@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.springframework.transaction.annotation.Propagation;
@@ -19,6 +20,7 @@ public class PlainJdbcCompanyTypeRepository implements CompanyTypeRepository {
     private static final String SELECT_ALL = "select * from CompanyType";
     private static final String INSERT_SQL = "insert into CompanyType (id, typeName) values (null, ?)";
     private static final String SELECT_BY_ID = "select * from CompanyType where id = ?";
+    private static final String UPDATE_SQL = "update CompanyType set typeName = ? where id = ?";
     private final DataSource dataSource;
 
     public PlainJdbcCompanyTypeRepository(DataSource dataSource) {
@@ -27,18 +29,16 @@ public class PlainJdbcCompanyTypeRepository implements CompanyTypeRepository {
 
     @Override
     public List<CompanyType> list() {
-        try (Connection connection = getConnection()) {
-            try (Statement stmt = connection.createStatement()) {
-                try (ResultSet rs = stmt.executeQuery(SELECT_ALL)) {
-                    List<CompanyType> result = new ArrayList<>();
-                    while (rs.next()) {
-                        CompanyType companyType = new CompanyType(rs.getString("typeName"));
-                        companyType.setId(rs.getLong("id"));
-                        result.add(companyType);
-                    }
-                    return result;
-                }
+        try (Connection connection = getConnection();
+        		Statement stmt = connection.createStatement();
+        		ResultSet rs = stmt.executeQuery(SELECT_ALL)) {
+            List<CompanyType> result = new ArrayList<>();
+            while (rs.next()) {
+                CompanyType companyType = new CompanyType(rs.getString("typeName"));
+                companyType.setId(rs.getLong("id"));
+                result.add(companyType);
             }
+            return result;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -64,22 +64,34 @@ public class PlainJdbcCompanyTypeRepository implements CompanyTypeRepository {
 
     @Override
     public CompanyType find(Long id) {
-        try (Connection connection = getConnection()) {
-            try (PreparedStatement stmt = connection.prepareStatement(SELECT_BY_ID)) {
-                stmt.setLong(1, id);
-                try (ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next()) {
-                        CompanyType companyType = new CompanyType(rs.getString("typeName"));
-                        companyType.setId(rs.getLong("id"));
-                        return companyType;
-                    } else {
-                        return null;
-                    }
+        try (Connection connection = getConnection();
+        		PreparedStatement stmt = connection.prepareStatement(SELECT_BY_ID)) {
+            stmt.setLong(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    CompanyType companyType = new CompanyType(rs.getString("typeName"));
+                    companyType.setId(rs.getLong("id"));
+                    return companyType;
+                } else {
+                    return null;
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void update(CompanyType object) {
+        try (Connection connection = getConnection();
+        		PreparedStatement stmt = connection.prepareStatement(UPDATE_SQL)) {
+            stmt.setString(1, object.getTypeName());
+            stmt.setLong(2, object.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private Connection getConnection() throws SQLException {
