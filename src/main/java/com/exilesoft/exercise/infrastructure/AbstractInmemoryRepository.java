@@ -25,11 +25,13 @@ public class AbstractInmemoryRepository {
 		}
 	}
 
-    protected void generateId(Object object) {
+    protected Long generateId(Object object) {
         try {
             Field field = object.getClass().getDeclaredField("id");
             field.setAccessible(true);
-            field.set(object, idSequence++);
+            long id = idSequence++;
+			field.set(object, id);
+			return id;
         } catch (NoSuchFieldException|SecurityException|IllegalAccessException e) {
             throw new RuntimeException(e);
         }

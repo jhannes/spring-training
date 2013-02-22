@@ -8,4 +8,6 @@ public interface PersonRepository {
 
     void create(Person object);
 
+	Person find(Long id);
+
 }

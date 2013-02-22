@@ -2,17 +2,25 @@ package com.exilesoft.exercise.company;
 
 import java.io.Serializable;
 
-import com.exilesoft.exercise.company.type.CompanyType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+import com.exilesoft.exercise.company.type.CompanyType;
+import com.google.common.base.Objects;
+
+@Entity
 public class Company implements Serializable {
 
-    private static long idSequence;
 
     private String companyName;
     private String companyUrl;
 
     private CompanyType companyType;
-    private final Long id = idSequence++;
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     public String getCompanyName() {
         return companyName;
@@ -46,4 +54,25 @@ public class Company implements Serializable {
         return 0;
     }
 
+    @Override
+	public int hashCode() {
+		return Objects.hashCode(companyName, companyUrl);
+    }
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Company))
+			return false;
+		Company other = (Company) obj;
+		return Objects.equal(this.companyName, other.companyName)
+				&& Objects.equal(this.companyUrl, other.companyUrl);
+	}
+
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this)
+				.add("companyName", companyName).add("companyUrl", companyUrl)
+				.add("companyType", companyType)
+				.toString();
+	}
 }

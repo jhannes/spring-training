@@ -2,6 +2,7 @@
 
   <persistence-unit name="addressBookUnit" transaction-type="RESOURCE_LOCAL">
     <class>com.exilesoft.exercise.company.type.CompanyType</class>
+    <class>com.exilesoft.exercise.company.Company</class>
   </persistence-unit>
 
 </persistence>

@@ -23,4 +23,8 @@ public class RandomData {
 		return "http://www." + randomWord() + ".com/" + randomWord();
 	}
 
+	public static String randomEmail() {
+		return randomWord() + "@" + randomWord() + ".com";
+	}
+
 }

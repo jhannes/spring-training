@@ -1,31 +1,32 @@
 package com.exilesoft.exercise.company;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class InmemoryCompanyRepository implements CompanyRepository {
+import com.exilesoft.exercise.infrastructure.AbstractInmemoryRepository;
 
-    private final List<Company> companies = new ArrayList<>();
+@Repository
+public class InmemoryCompanyRepository extends AbstractInmemoryRepository implements CompanyRepository {
+
+    private final Map<Long, Company> companies = new HashMap<>();
 
     @Override
     public void create(Company newObject) {
-        companies.add(newObject);
+        companies.put(generateId(newObject), newObject);
     }
 
     @Override
     public List<Company> list() {
-        return companies;
+        return new ArrayList<>(companies.values());
     }
 
     @Override
     public Company find(Long id) {
-        for (Company company : companies) {
-            if (company.getId().equals(id)) return company;
-        }
-        return null;
+        return clone(companies.get(id));
     }
 
 }
