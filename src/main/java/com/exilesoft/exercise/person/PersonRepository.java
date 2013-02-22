@@ -1,13 +1,7 @@
 package com.exilesoft.exercise.person;
 
-import java.util.List;
+import com.exilesoft.exercise.infrastructure.Repository;
 
-public interface PersonRepository {
-
-    List<Person> list();
-
-    void create(Person object);
-
-	Person find(Long id);
+public interface PersonRepository extends Repository<Person> {
 
 }

@@ -6,10 +6,34 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import com.exilesoft.exercise.company.Company;
+public class AbstractInmemoryRepository<T> implements Repository<T> {
 
-public class AbstractInmemoryRepository {
+    private final Map<Long, T> entities = new HashMap<>();
+
+    @Override
+    public void create(T newObject) {
+        entities.put(generateId(newObject), newObject);
+    }
+
+    @Override
+    public List<T> list() {
+        return new ArrayList<>(entities.values());
+    }
+
+    @Override
+    public void update(T object) {
+    	entities.put(getId(object), object);
+    }
+
+	@Override
+    public T find(Long id) {
+        return clone(entities.get(id));
+    }
 
     private long idSequence = 0;
 
@@ -27,7 +51,7 @@ public class AbstractInmemoryRepository {
 		}
 	}
 
-    protected Long generateId(Object object) {
+    protected Long generateId(T object) {
         try {
             Field field = object.getClass().getDeclaredField("id");
             field.setAccessible(true);
@@ -39,7 +63,7 @@ public class AbstractInmemoryRepository {
         }
     }
 
-    protected Long getId(Company object) {
+    protected Long getId(T object) {
         try {
             Field field = object.getClass().getDeclaredField("id");
             field.setAccessible(true);
