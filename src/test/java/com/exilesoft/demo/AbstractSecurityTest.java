@@ -13,7 +13,7 @@ public abstract class AbstractSecurityTest {
 
 	private final ApplicationContext ctx = createContext();
 
-	private final Application application = ctx.getBean(Application.class);
+	private final UserManager application = ctx.getBean(UserManager.class);
 
 	@Test
 	public void shouldAllowAccessToAuthorizedUsers() {

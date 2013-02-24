@@ -2,7 +2,7 @@ package com.exilesoft.demo;
 
 import com.exilesoft.demo.security.RequiresLogin;
 
-public interface ApplicationInfo {
+public interface UserRepository {
 
 	@RequiresLogin("Johannes")
     String getPassword();

@@ -10,7 +10,7 @@ public class SimpleXmlConfigTest {
 
 	private final ApplicationContext ctx = new ClassPathXmlApplicationContext("/com/exilesoft/demo/simpleContext.xml");
 
-	private final Application application = ctx.getBean(Application.class);
+	private final UserManager application = ctx.getBean(UserManager.class);
 
 	@Test
 	public void shouldFindPassword() {

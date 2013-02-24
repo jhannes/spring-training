@@ -16,13 +16,13 @@ public class JavaConfigTest {
     public static class ExplicitConfig {
 
     	@Bean
-    	public ApplicationInfo applicationInfo() throws Exception {
-    		return (ApplicationInfo)new SecurityProxy(new ApplicationInfoImpl("public", "secret"), ApplicationInfo.class).getObject();
+    	public UserRepository userRepository() throws Exception {
+    		return (UserRepository)new SecurityProxy(new FakeUserRepository("public", "secret"), UserRepository.class).getObject();
     	}
 
     	@Bean
-        public Application application() {
-            return new Application();
+        public UserManager application() {
+            return new UserManager();
         }
     }
 

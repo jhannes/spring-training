@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean class="com.exilesoft.demo.Application">
-		<property name="applicationInfo" ref="applicationInfo" />
+	<bean class="com.exilesoft.demo.UserManager">
+		<property name="userRepository" ref="userRepository" />
 	</bean>
 
-	<bean id="applicationInfo" class="com.exilesoft.demo.ApplicationInfoImpl">
+	<bean id="userRepository" class="com.exilesoft.demo.FakeUserRepository">
 		<constructor-arg value="public" />
 		<constructor-arg value="secret" />
 	</bean>
