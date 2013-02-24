@@ -10,4 +10,8 @@ public interface CompanyRepository {
 
 	Company find(Long id);
 
+    List<Company> findByNameLike(String nameQuery);
+
+    void update(Company company);
+
 }

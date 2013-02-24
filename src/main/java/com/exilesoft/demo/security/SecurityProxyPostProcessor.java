@@ -10,6 +10,10 @@ public class SecurityProxyPostProcessor implements BeanPostProcessor {
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName)
 			throws BeansException {
+	    Class<?> interfaceRequiringLogin = getInterfaceRequiringLogin(bean.getClass());
+	    if (interfaceRequiringLogin != null) {
+	        return new SecurityProxy(bean, interfaceRequiringLogin);
+	    }
 		return bean;
 	}
 

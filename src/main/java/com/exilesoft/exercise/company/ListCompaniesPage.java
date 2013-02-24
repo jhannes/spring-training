@@ -2,6 +2,8 @@ package com.exilesoft.exercise.company;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -13,11 +15,20 @@ import org.apache.wicket.model.Model;
 
 public class ListCompaniesPage extends WebPage {
 
-    private transient final CompanyRepository repository = new InmemoryCompanyRepository();
+    @Inject
+    private CompanyRepository repository;
     private final Model<String> queryModel = new Model<>();
 
     public ListCompaniesPage() {
-        add(new ListView<Company>("companies", list()) {
+        show(repository.list());
+    }
+
+    public ListCompaniesPage(List<Company> companies) {
+        show(companies);
+    }
+
+    private void show(List<Company> companies) {
+        add(new ListView<Company>("companies", companies) {
 
             @Override
             protected void populateItem(ListItem<Company> item) {
@@ -34,12 +45,13 @@ public class ListCompaniesPage extends WebPage {
             {
                 add(new TextField<>("nameQuery", queryModel));
             }
+
+            @Override
+            protected void onSubmit() {
+                setResponsePage(new ListCompaniesPage(repository.findByNameLike(queryModel.getObject())));
+            }
         });
     }
-
-	private List<Company> list() {
-		return repository.list();
-	}
 
 
 }

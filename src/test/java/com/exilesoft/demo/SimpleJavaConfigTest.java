@@ -15,8 +15,15 @@ public class SimpleJavaConfigTest {
 
     	@Bean
         public UserManager application() {
-            return new UserManager();
+            UserManager userManager = new UserManager();
+            userManager.setUserRepository(userRepository());
+            return userManager;
         }
+
+    	@Bean
+    	public UserRepository userRepository() {
+    	    return new FakeUserRepository("public", "secret");
+    	}
 	}
 
 

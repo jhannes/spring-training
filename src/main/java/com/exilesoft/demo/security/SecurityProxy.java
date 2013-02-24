@@ -49,7 +49,7 @@ public class SecurityProxy implements FactoryBean<Object> {
 
     private boolean userIsAuthorized(Method method) {
     	RequiresLogin requiresLogin = method.getAnnotation(RequiresLogin.class);
-		return requiresLogin == null || UserContext.getUser() != null;
+		return requiresLogin == null || requiresLogin.value().equals(UserContext.getUser());
     }
 
     @Override

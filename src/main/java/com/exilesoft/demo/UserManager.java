@@ -1,8 +1,11 @@
 package com.exilesoft.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 public class UserManager {
 
+    @Autowired
     private UserRepository userRepository;
 
     public void setUserRepository(UserRepository userRepository) {

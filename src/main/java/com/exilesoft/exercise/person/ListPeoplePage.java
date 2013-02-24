@@ -1,5 +1,7 @@
 package com.exilesoft.exercise.person;
 
+import javax.inject.Inject;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -7,7 +9,8 @@ import org.apache.wicket.markup.html.list.ListView;
 
 public class ListPeoplePage extends WebPage {
 
-    private transient final PersonRepository personRepository = new InmemoryPersonRepository();
+    @Inject
+    private PersonRepository personRepository;
 
     public ListPeoplePage() {
         add(new ListView<Person>("people", personRepository.list()) {

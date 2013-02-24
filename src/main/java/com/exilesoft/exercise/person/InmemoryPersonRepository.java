@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import com.exilesoft.exercise.infrastructure.AbstractInmemoryRepository;
 
+@Repository
 public class InmemoryPersonRepository extends AbstractInmemoryRepository implements PersonRepository {
 
 	private final Map<Long, Person> entities = new HashMap<>();

@@ -6,9 +6,9 @@ import org.aspectj.lang.annotation.Before;
 @Aspect
 public class SecurityCheckAspect {
 
-	@Before("execution(* com.exilesoft.foo.*.*(..)) && @annotation(requiresLogin)")
-	public void checkAccess(@SuppressWarnings("unused") RequiresLogin requiresLogin) {
-		if (UserContext.getUser() != null) {
+	@Before("execution(* com.exilesoft.demo.*.*(..)) && @annotation(requiresLogin)")
+	public void checkAccess(RequiresLogin requiresLogin) {
+		if (!requiresLogin.value().equals(UserContext.getUser())) {
 			throw new RuntimeException("Access denied");
 		}
 	}
