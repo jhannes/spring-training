@@ -36,9 +36,9 @@ public class AddressBookWebTest {
         verifyCompanyDetails("Exilesoft", "Details for Exilesoft", "Offshoring");
 
         addPersonToCompany("Exilesoft", "Johannes Brodwall", "jbr@exilesoft.com");
-        verifyPersonPresent("Johannes Brodwall (Exilesoft)");
         verifyCompanyContainsPerson("Exilesoft", "Johannes Brodwall");
         verifyCompanyDoesNotContainPerson("Visma", "Johannes Brodwall");
+        verifyPersonPresent("Johannes Brodwall (Exilesoft)");
     }
 
     private void addCompany(String companyName, String companyUrl, String companyType) {
@@ -47,6 +47,7 @@ public class AddressBookWebTest {
 	    browser.findElement(By.name("companyUrl")).sendKeys(companyUrl);
 	    findSelectOptionWithText("companyType", companyType).setSelected();
 	    browser.findElement(By.name("companyName")).submit();
+        assertThat(browser.getTitle()).isEqualTo("Johannes's addresses :: Menu");
 	}
 
 	private void verifyCompanySearch(String searchTerm, String matchingCompany, String nonMatchingCompany) {

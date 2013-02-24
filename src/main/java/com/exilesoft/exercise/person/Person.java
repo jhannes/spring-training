@@ -10,7 +10,7 @@ public class Person implements Serializable {
 
     private String emailAddress;
 
-    private Company company;
+    transient private Company company;
 
 	private Long id;
 

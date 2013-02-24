@@ -9,7 +9,7 @@ import com.exilesoft.exercise.RandomData;
 public abstract class AbstractCompanyTypeRepositoryTest {
 
     @Test
-    public void shouldPersistCompanyType() throws Exception {
+    public void shouldPersistEntity() throws Exception {
         CompanyType companyType = randomCompanyType();
         getRepository().create(companyType);
 
@@ -20,7 +20,7 @@ public abstract class AbstractCompanyTypeRepositoryTest {
     }
 
     @Test
-    public void shouldListAllCompanyTypes() throws Exception {
+    public void shouldListAll() throws Exception {
         CompanyType type1 = randomCompanyType();
         CompanyType type2 = randomCompanyType();
         getRepository().create(type1);

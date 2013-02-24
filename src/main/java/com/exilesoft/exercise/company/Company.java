@@ -16,7 +16,7 @@ public class Company implements Serializable {
 
     private Long id;
 
-	private final List<Person> people = new ArrayList<>();
+	private transient final List<Person> people = new ArrayList<>();
 
     public String getCompanyName() {
         return companyName;

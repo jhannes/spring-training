@@ -13,6 +13,8 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
     <context:annotation-config />
 
     <bean class="com.exilesoft.demo.UserManager" />
+    
+    <!-- How will Spring know which constructor on FakeUserRepository to call? -->
     <bean class="com.exilesoft.demo.FakeUserRepository" />
 
     <bean class="com.exilesoft.demo.security.SecurityCheckAspect"/>

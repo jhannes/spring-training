@@ -14,7 +14,7 @@ public class SimpleJavaConfigTest {
 	public static class Config {
 
     	@Bean
-        public UserManager application() {
+        public UserManager userManager() {
             return new UserManager();
         }
 	}
@@ -22,11 +22,11 @@ public class SimpleJavaConfigTest {
 
 	private final ApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
 
-	private final UserManager application = ctx.getBean(UserManager.class);
+	private final UserManager userManager = ctx.getBean(UserManager.class);
 
 	@Test
 	public void shouldFindPassword() {
-	    assertThat(application.getPassword()).isEqualTo("secret");
+	    assertThat(userManager.getPassword()).isEqualTo("secret");
 	}
 
 }
