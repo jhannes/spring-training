@@ -2,16 +2,26 @@ package com.exilesoft.exercise.person;
 
 import java.io.Serializable;
 
-import com.exilesoft.exercise.company.Company;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+import com.exilesoft.exercise.company.Company;
+import com.google.common.base.Objects;
+
+@Entity
 public class Person implements Serializable {
 
     private String personName;
 
     private String emailAddress;
 
+    @ManyToOne
     private Company company;
 
+    @Id
+    @GeneratedValue
 	private Long id;
 
 	Person() {
@@ -44,5 +54,28 @@ public class Person implements Serializable {
 	public Long getId() {
 		return id;
 	}
+
+	@Override
+    public int hashCode() {
+        return Objects.hashCode(personName, emailAddress);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Person))
+            return false;
+        Person other = (Person) obj;
+        return Objects.equal(this.personName, other.personName)
+                && Objects.equal(this.personName, other.personName);
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("id", id)
+                .add("personName", personName)
+                .add("emailAddress", emailAddress).toString();
+    }
+
 
 }

@@ -6,9 +6,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class AbstractInmemoryRepository {
+public class AbstractInmemoryRepository<T> {
 	private long idSequence = 0;
+    protected final Map<Long, T> entities = new HashMap<>();
 
     @SuppressWarnings("unchecked")
 	protected static<T> T clone(T obj) {
@@ -46,6 +51,16 @@ public class AbstractInmemoryRepository {
         }
 	}
 
+    public void create(T newObject) {
+        entities.put(generateId(newObject), newObject);
+    }
 
+    public T find(Long id) {
+        return clone(entities.get(id));
+    }
+
+    public List<T> list() {
+        return new ArrayList<>(entities.values());
+    }
 
 }

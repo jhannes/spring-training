@@ -9,4 +9,6 @@ public interface PersonRepository {
 
 	void create(Person person);
 
+    Person find(Long id);
+
 }

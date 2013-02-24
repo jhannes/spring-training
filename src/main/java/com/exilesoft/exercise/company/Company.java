@@ -4,9 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 import com.exilesoft.exercise.company.type.CompanyType;
 import com.exilesoft.exercise.person.Person;
+import com.google.common.base.Objects;
 
+@Entity
 public class Company implements Serializable {
 
     private String companyName;
@@ -14,8 +21,11 @@ public class Company implements Serializable {
 
     private CompanyType companyType;
 
+    @Id
+    @GeneratedValue
     private Long id;
 
+    @OneToMany(mappedBy="company")
 	private final List<Person> people = new ArrayList<>();
 
     public String getCompanyName() {
@@ -59,4 +69,28 @@ public class Company implements Serializable {
 		this.people.add(person);
 		return person;
 	}
+
+	@Override
+    public int hashCode() {
+        return Objects.hashCode(companyName, companyUrl);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Company))
+            return false;
+        Company other = (Company) obj;
+        return Objects.equal(this.companyName, other.companyName)
+                && Objects.equal(this.companyName, other.companyName);
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("id", id)
+                .add("companyName", companyName)
+                .add("companyUrl", companyUrl).toString();
+    }
+
+
 }
